@@ -4,6 +4,12 @@
 const fs = require('fs');
 const path = require('path');
 
+let [,, rightValue, downValue] = process.argv.map(Number);
+
+// convert parameters to numbers (process.argv returns them as strings)
+const right = Number(rightValue);
+const down = Number(downValue);
+
 // assume there's a file "input" in the current directory
 const inputFilePath = path.join(__dirname, 'input');
 
@@ -16,8 +22,8 @@ const rows = input.split('\n');
 let x = 0, y = 0;
 let treeCount = 0;
 
-// loop through the rows, step down 1
-for (; y < rows.length; y++) {
+// loop through the rows, step down customized amount
+for (; y < rows.length; y += down) {
     const row = rows[y];
     // the x coordinate needs to be moded with the row length, to support
     // looping
@@ -28,8 +34,8 @@ for (; y < rows.length; y++) {
         treeCount = treeCount + 1;
     }
 
-    // 3 steps right
-    x = x + 3;
+    // steps right customized amount
+    x = x + right;
 }
 
 console.log(`Trees encountered: ${treeCount}`);
