@@ -7,8 +7,23 @@ const path = require('path');
 let [,, rightValue, downValue] = process.argv.map(Number);
 
 // convert parameters to numbers (process.argv returns them as strings)
-const right = Number(rightValue);
-const down = Number(downValue);
+// set default values in case we're passed junk values (or none at all)
+let right = 0;
+let down = 1;
+
+if (!isNaN(rightValue)) {
+    // if rightValue is a number (isNaN does the conversion from a string),
+    // use it, but only if it's non-negative; otherwise use the default value
+    right = Number(rightValue);
+    right = (right >= 0) ? right : 0;
+}
+
+if (!isNaN(downValue)) {
+    // likewise if downValue is a number use it, but only if it's greater than
+    // zero; otherwise use the default value
+    down = Number(downValue);
+    down = (down > 0) ? down : 1;
+}
 
 // assume there's a file "input" in the current directory
 const inputFilePath = path.join(__dirname, 'input');
